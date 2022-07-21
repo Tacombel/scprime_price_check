@@ -34,7 +34,11 @@ $ crontab -e
 
 And add a line similar to this one, that will execute the script every hour.
 
-0 * * * * systemd-cat -t "checkprice-cron" /home/daniel/scprime_price_check/.venv/bin/python /home/daniel/scprime_price_check/scprime_price_check.py
+In order to prevent everybody scraping at the same time, you can get an aleatory minute from the following api and use it in the cron job
+
+x = http://www.randomnumberapi.com/api/v1.0/random?min=0&max=59
+
+x * * * * systemd-cat -t "checkprice-cron" /home/daniel/scprime_price_check/.venv/bin/python /home/daniel/scprime_price_check/scprime_price_check.py
 
 You will be able to check the journal to see it working like this
 
