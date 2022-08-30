@@ -1,7 +1,8 @@
-# v0.6
+# v0.7
 
 import os
 import sys
+from urllib import request
 import requests
 from requests.structures import CaseInsensitiveDict
 import json
@@ -34,7 +35,19 @@ def main():
             minstorageprice = e.split()[1]
             break
         n += 1
-    reference_price = get_storageprice()
+    try:
+        reference_price = get_storageprice()
+    except TypeError:
+        url = 'https://api.coingecko.com/api/v3/simple/price?ids=siaprime-coin&vs_currencies=btc%2Cusd'
+        headers = CaseInsensitiveDict()
+        headers["Accept"] = "application/json"
+        headers["Content-Type"] = "application/json"
+        spc_dolar = requests.get(url, headers=headers).json()
+        spc_dolar = spc_dolar['siaprime-coin']['usd']
+        reference_price = 4.00 / spc_dolar * 0.9
+        print(f'The database failed to answer, so we are usind the $4/TB as reference, with a 10% discount')
+        print(reference_price)
+
     if reference_price == 'no data':
         sys.exit()
     target_scp_price = str(round(float(reference_price) * 0.994, 3))
