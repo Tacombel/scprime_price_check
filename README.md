@@ -32,9 +32,13 @@ You will need a cronjob to execute it periodicaly. It must be the crontab of the
 
 $ crontab -e
 
-And add a line similar to this one, that will execute the script every 2 minutes.
+And add a line similar to this one, that will execute the script every hour.
 
-*/2 * * * * systemd-cat -t "checkprice-cron" /home/daniel/scprime_price_check/.venv/bin/python /home/daniel/scprime_price_check/scprime_price_check.py
+In order to prevent everybody scraping at the same time, you can get an aleatory minute from the following api and use it in the cron job
+
+x = http://www.randomnumberapi.com/api/v1.0/random?min=0&max=59
+
+x * * * * systemd-cat -t "checkprice-cron" /home/daniel/scprime_price_check/.venv/bin/python /home/daniel/scprime_price_check/scprime_price_check.py
 
 You will be able to check the journal to see it working like this
 
@@ -69,7 +73,7 @@ $ sudo journalctl -n100|grep checkprice-cron
     - Edit it with notepad
     - The file should contain one line. You have to adapt the path to yours
         - c:\scprime\scprime_price_check\venv\Scripts\python.exe c:\scprime\scprime_price_check\scprime_price_check.py
-    - And program it to launch periodically. I do it every 2 minutes.
+    - And program it to launch periodically. I do it every hour.
 
 Video in spanish explaning the procedure https://www.youtube.com/watch?v=qzkOpk045vk
 
