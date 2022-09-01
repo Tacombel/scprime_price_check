@@ -38,7 +38,7 @@ In order to prevent everybody scraping at the same time, you can get an aleatory
 
 x = http://www.randomnumberapi.com/api/v1.0/random?min=0&max=59
 
-x * * * * systemd-cat -t "checkprice-cron" /home/daniel/scprime_price_check/.venv/bin/python /home/daniel/scprime_price_check/scprime_price_check.py
+x * * * * systemd-cat -t "checkprice-cron" /home/daniel/scprime_price_check/.venv/bin/python -u /home/daniel/scprime_price_check/scprime_price_check.py
 
 You will be able to check the journal to see it working like this
 
@@ -72,7 +72,7 @@ $ sudo journalctl -n100|grep checkprice-cron
     - Name it pricechecker.bat
     - Edit it with notepad
     - The file should contain one line. You have to adapt the path to yours
-        - c:\scprime\scprime_price_check\venv\Scripts\python.exe c:\scprime\scprime_price_check\scprime_price_check.py
+        - c:\scprime\scprime_price_check\venv\Scripts\python.exe -u c:\scprime\scprime_price_check\scprime_price_check.py
     - And program it to launch periodically. I do it every hour.
 
 Video in spanish explaning the procedure https://www.youtube.com/watch?v=qzkOpk045vk
